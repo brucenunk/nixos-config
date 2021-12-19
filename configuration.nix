@@ -73,7 +73,9 @@
   # };
 
 
-users.mutableUsers = false;
+# Allow mutable users so i can iterate on this without loosing my user!
+# users.mutableUsers = false;
+
 users.users.james = {
   description = "James";
   extraGroups = [ "wheel" "networkmanager" ];
