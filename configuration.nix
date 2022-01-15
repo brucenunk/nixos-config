@@ -76,6 +76,27 @@
     vim
   ];
 
+
+  # Yubikey, straight from doco.
+  services.udev.packages = [ pkgs.yubikey-personalization ];
+
+  environment.shellInit = ''
+    export GPG_TTY="$(tty)"
+    gpg-connect-agent /bye
+    export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
+  '';
+
+  programs = {
+    ssh.startAgent = false;
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
+  };
+
+  programs.gnupg.agent.pinentryFlavor = "curses";
+
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
